@@ -1,6 +1,6 @@
 #include "NTDs.h"
 
-int tune[] = {  // 根据简谱列出各频率
+int note[] = {  // 根据简谱列出各频率
     /*
     // 前奏  
     NTD3, NTD5, NTD6, NTDH1, NTDH3,
@@ -16,7 +16,7 @@ int tune[] = {  // 根据简谱列出各频率
     // 东湖之滨，珞珈山上，这是我们亲爱的学堂
     NTD2, NTD2, NTD5, NTD6, NTD5,
     NTD2, NTD5, NTD3, NTD2, NTD1,
-    NTD3, NTD3, NTD5, NTD5, NTD5, NTD5, NTDH3, NTDH2, NTDH1,
+    NTD3, NTD3, NTD5, NTD5, NTD5, NTDH3, NTDH2, NTDH1,
     NTD5, NTD7, NTD2, NTDH1, NTD5,
     // 
     NTDH1, NTD7, NTD6, NTD5, NTD6,
@@ -71,21 +71,21 @@ float durt[] = {  // 根据简谱列出各节拍
 };
 
 int length;
-int tonePin = 3;   // 使用3号接口
+int tonePin = 4;   // 使用4号接口
 
 void setup() {
     pinMode(tonePin, OUTPUT);
+    pinMode(5, OUTPUT);
+    pinMode(6, OUTPUT);
     pinMode(LED_BUILTIN, OUTPUT);
-    length = sizeof(tune) / sizeof(tune[0]);  // 计算音调数组的长度
+    length = sizeof(note) / sizeof(note[0]);  // 计算音调数组的长度
 }
 
 void loop() {
-    digitalWrite(LED_BUILTIN, HIGH);
-    delay(100);
-    digitalWrite(LED_BUILTIN, LOW);
-
+    digitalWrite(5, LOW);
+    analogWrite(6, 128);
     for(int x = 0; x < length; x++) {
-        tone(tonePin, tune[x]);
+        tone(tonePin, note[x]);
         delay(700 * durt[x]);  // 这里用来根据节拍调节延时。
         noTone(tonePin);
     }
